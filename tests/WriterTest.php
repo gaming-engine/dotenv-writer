@@ -68,7 +68,7 @@ class WriterTest extends TestCase
 
         // Assert
         $this->assertEquals(
-            "blarg=10\ntesting=foo",
+            "blarg=10" . PHP_EOL . "testing=foo",
             (string)$subject
         );
     }
@@ -124,7 +124,7 @@ class WriterTest extends TestCase
 
         $fileMock->expects($this->once())
             ->method('write')
-            ->with($path, "foo=10\nbar=testing");
+            ->with($path, "foo=10" . PHP_EOL . "bar=testing");
 
         // Act
         $subject->write($path);
@@ -147,7 +147,7 @@ class WriterTest extends TestCase
 
         // Assert
         $this->assertEquals(
-            "foo=10\nbar=testing",
+            "foo=10" . PHP_EOL . "bar=testing",
             $result
         );
     }
