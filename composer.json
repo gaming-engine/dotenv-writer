@@ -1,0 +1,44 @@
+{
+  "name": "gaming-engine/dotenv-writer",
+  "description": "Dot Env File Writer",
+  "keywords": [
+    "gaming-engine",
+    "env",
+    "dotenv",
+    "environment"
+  ],
+  "homepage": "https://github.com/gaming-engine/dotenv-writer",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Andrew Judd",
+      "email": "awjudd@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0|^8.1",
+    "vlucas/phpdotenv": "^5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "GamingEngine\\DotEnv\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GamingEngine\\DotEnv\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
