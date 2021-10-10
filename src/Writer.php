@@ -14,7 +14,7 @@ class Writer
         $this->parser = $parser ?? new Parser();
     }
 
-    public function load(string $path)
+    public function load(string $path): self
     {
         $this->environment = array_merge(
             $this->environment,
@@ -22,6 +22,8 @@ class Writer
                 $this->file->read($path)
             )
         );
+
+        return $this;
     }
 
     public function setValue(string $key, $value): self
