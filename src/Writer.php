@@ -49,7 +49,7 @@ class Writer
                 function ($value, $key) {
                     $format = '%s=%s';
 
-                    if (str_contains('#', $value)) {
+                    if (str_contains($value, '#')) {
                         $format = '%s="%s"';
                     }
 

@@ -85,7 +85,103 @@ class WriterTest extends TestCase
         $result = $subject->setValue('foo', 10);
 
         // Assert
-        $this->assertTrue($subject === $result);
+        $this->assertSame($subject, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function writer_does_not_add_quotes_around_null()
+    {
+        // Arrange
+        $subject = new Writer(
+            $fileMock = $this->createMock(File::class)
+        );
+
+        $path = md5(time());
+
+        $subject->setValue('foo', null);
+
+        $fileMock->expects($this->once())
+            ->method('write')
+            ->with($path, 'foo=');
+
+        // Act
+        $subject->write($path);
+
+        // Assert
+    }
+
+    /**
+     * @test
+     */
+    public function writer_does_not_add_quotes_around_numbers()
+    {
+        // Arrange
+        $subject = new Writer(
+            $fileMock = $this->createMock(File::class)
+        );
+
+        $path = md5(time());
+
+        $subject->setValue('foo', $value = mt_rand());
+
+        $fileMock->expects($this->once())
+            ->method('write')
+            ->with($path, 'foo=' . $value);
+
+        // Act
+        $subject->write($path);
+
+        // Assert
+    }
+
+    /**
+     * @test
+     */
+    public function writer_does_not_add_quotes_around_text()
+    {
+        // Arrange
+        $subject = new Writer(
+            $fileMock = $this->createMock(File::class)
+        );
+
+        $path = md5(time());
+
+        $subject->setValue('foo', $value = md5(time()));
+
+        $fileMock->expects($this->once())
+            ->method('write')
+            ->with($path, 'foo=' . $value);
+
+        // Act
+        $subject->write($path);
+
+        // Assert
+    }
+
+    /**
+     * @test
+     */
+    public function writer_adds_quotes_around_text_with_hash_tags()
+    {
+        // Arrange
+        $subject = new Writer(
+            $fileMock = $this->createMock(File::class)
+        );
+
+        $path = md5(time());
+
+        $subject->setValue('foo', $value = "$path#$path");
+
+        $fileMock->expects($this->once())
+            ->method('write')
+            ->with($path, 'foo="' . $value . '"');
+
+        // Act
+        $subject->write($path);
+
+        // Assert
     }
 
     /**
@@ -113,6 +209,7 @@ class WriterTest extends TestCase
      */
     public function writer_can_write_the_configuration_to_a_file()
     {
+        // Arrange
         $subject = new Writer(
             $fileMock = $this->createMock(File::class)
         );
